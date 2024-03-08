@@ -1,3 +1,5 @@
+type Gender = "M" | "F";
+type Role = "admin" | "user";
 export interface IUser {
   first_name: string;
   last_name: string;
@@ -10,7 +12,7 @@ export interface IUser {
     line2?: string;
   };
   dob: string;
-  gender: string;
+  gender: Gender;
   race: string;
-  role: "admin" | "user";
+  role: Role;
 }
