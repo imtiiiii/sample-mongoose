@@ -7,9 +7,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //------------------------------------------------
-//? ROUTES
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
+//? IMPORT ALL ROUTES
+import userRoutes from "./app/modules/User/user.routes";
+app.use("/api/v1/users", userRoutes);
 
 export default app;
