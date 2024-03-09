@@ -13,16 +13,16 @@ export const getUsers = async (req: Request, res: Response) => {
 };
 export const getUser = async (req: Request, res: Response) => {
   const { id } = req.params;
-  console.log(id, "id");
-  const validUserObject = new mongoose.Types.ObjectId(id);
-  console.log("🚀 ~ validUserObject:", validUserObject);
-  return;
-  const findUser: IUser | null = await getUserService(id);
-  console.log("🚀 ~ findUser:", findUser);
-  if (!findUser) {
-    return res.status(404).send({ message: "not found" });
+  try {
+    const validUserObject = new mongoose.Types.ObjectId(id);
+    const findUser: IUser | null = await getUserService(validUserObject);
+    if (!findUser) {
+      throw new Error("invalid id");
+    }
+    res.status(200).send({ message: "ok", data: findUser });
+  } catch (error) {
+    return res.status(400).send({ message: "Not found" });
   }
-  res.status(200).send({ message: "ok", data: findUser });
 };
 export const createUser = async (req: Request, res: Response) => {
   const userInfo = req.body;

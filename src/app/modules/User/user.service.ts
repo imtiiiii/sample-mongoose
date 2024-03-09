@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { IUser } from "./user.interface";
 import User from "./user.model";
 
@@ -10,7 +11,9 @@ export const createUserService = async (userInfo: IUser): Promise<IUser> => {
   const newUser = await user.save();
   return newUser;
 };
-export const getUserService = async (id: string): Promise<IUser | null> => {
+export const getUserService = async (
+  id: mongoose.Types.ObjectId
+): Promise<IUser | null> => {
   const user = await User.findById(id);
   return user;
 };
