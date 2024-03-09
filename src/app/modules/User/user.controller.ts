@@ -14,8 +14,8 @@ export const getUsers = async (req: Request, res: Response) => {
 export const getUser = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
-    const validUserObject = new mongoose.Types.ObjectId(id);
-    const findUser: IUser | null = await getUserService(validUserObject);
+    const validUserIdObject = new mongoose.Types.ObjectId(id);
+    const findUser: IUser | null = await getUserService(validUserIdObject);
     if (!findUser) {
       throw new Error("invalid id");
     }
