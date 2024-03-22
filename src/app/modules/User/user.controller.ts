@@ -8,8 +8,17 @@ import { IUser } from "./user.interface";
 import mongoose from "mongoose";
 
 export const getUsers = async (req: Request, res: Response) => {
-  const users: IUser[] = await getUsersService();
-  res.status(200).send({ message: "ok", data: users });
+  try {
+    // Call the service function to fetch users
+    const users: IUser[] = await getUsersService();
+
+    // Respond with status 200 (OK) and the array of users
+    res.status(200).json({ message: "Users retrieved successfully", data: users });
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    // If an error occurs, respond with status 500 (Internal Server Error) and an error message
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 };
 export const getUser = async (req: Request, res: Response) => {
   const { id } = req.params; // Extracting the user ID from request parameters
@@ -35,9 +44,19 @@ export const getUser = async (req: Request, res: Response) => {
 };
 
 export const createUser = async (req: Request, res: Response) => {
-  const userInfo = req.body;
-  const createUser: IUser = await createUserService(userInfo);
-  res.status(201).send({ message: "ok", data: createUser });
+  try {
+    const userInfo = req.body;
+
+    // Call the service function to create a user
+    const createUser: IUser = await createUserService(userInfo);
+
+    // Respond with status 201 (Created) and the newly created user data
+    res.status(201).json({ message: "User created successfully", data: createUser });
+  } catch (error) {
+    console.error("Error creating user:", error);
+    // If an error occurs, respond with status 500 (Internal Server Error) and an error message
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 };
 export const updateUser = async (req: Request, res: Response) => {};
 export const deleteUser = async (req: Request, res: Response) => {};
